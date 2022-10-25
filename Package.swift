@@ -22,11 +22,13 @@ let package = Package(
             name: "CrackStationWrapper",
             dependencies: [
                 "CrackStation"
-            ],
-            resources: [.process("Resources")]),
+                // In an emergency, you could still get a package to work if
+                // the package repo isn't named `CrackStation`. Here:
+                //
+                //.product(name: "CrackStation", package: "sha-crack-station")
+            ]),
         .testTarget(
             name: "CrackStationWrapperTests",
-            dependencies: ["CrackStationWrapper"],
-            resources: [.process("Resources")]),
+            dependencies: ["CrackStationWrapper"])
     ]
 )

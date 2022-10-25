@@ -7,7 +7,7 @@ import CryptoKit
 import XCTest
 
 final class CrackStationTests: XCTestCase {
-    private let crackStation: Decrypter = CrackStationWrapper()
+    private let crackStation = CrackStationWrapper()
 
     // MARK: - Happy path
 
