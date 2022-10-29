@@ -34,7 +34,7 @@ final class CrackStationTests: XCTestCase {
         let crackedPassword = crackStation.decrypt(shaHash: shaHash)
 
         // Then
-        XCTAssertEqual(crackedPassword, nil)
+        XCTAssertEqual(crackedPassword, password)
     }
 
     func testTwoLetterSha1_99() throws {
@@ -46,7 +46,7 @@ final class CrackStationTests: XCTestCase {
         let crackedPassword = crackStation.decrypt(shaHash: shaHash)
 
         // Then
-        XCTAssertEqual(crackedPassword, nil)
+        XCTAssertEqual(crackedPassword, password)
     }
 
     func testTwoLetterSha1_otherCases() throws {
