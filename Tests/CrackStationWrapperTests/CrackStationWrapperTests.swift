@@ -25,6 +25,34 @@ final class CrackStationTests: XCTestCase {
         }
     }
 
+    func testTwoLetterSha1_aa() throws {
+        // Given
+        let password = "aa"
+        let shaHash = encrypt(password)
+
+        // When
+        let crackedPassword = crackStation.decrypt(shaHash: shaHash)
+
+        // Then
+        XCTAssertEqual(crackedPassword, nil)
+    }
+
+    func testTwoLetterSha1_99() throws {
+        // Given
+        let password = "99"
+        let shaHash = encrypt(password)
+
+        // When
+        let crackedPassword = crackStation.decrypt(shaHash: shaHash)
+
+        // Then
+        XCTAssertEqual(crackedPassword, nil)
+    }
+
+    func testTwoLetterSha1_otherCases() throws {
+        // TODO: Write
+    }
+
     // MARK: - Edge cases / rainy day scenarios
 
     func testEmptyString() throws {
