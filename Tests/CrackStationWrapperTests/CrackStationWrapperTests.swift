@@ -11,6 +11,7 @@ final class CrackStationTests: XCTestCase {
 
     // MARK: - Happy path
 
+    //tests for POC v1
     func testAllOneLetterSha1Permutations() throws {
         for letter in "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789" {
             // Given
@@ -25,6 +26,8 @@ final class CrackStationTests: XCTestCase {
         }
     }
 
+    
+    // tests for POC v2
     func testTwoLetterSha1_aa() throws {
         // Given
         let password = "aa"
@@ -72,6 +75,30 @@ final class CrackStationTests: XCTestCase {
     }
 
     // MARK: - Helpers
+    
+    
+    // tests for MVP
+    func testGivenCrackApiWithSha1_WhenAllCharacterCombinationsAreGiven_ThenShouldDecrypt() {
+        let arr = getAllCombinations()
+        DispatchQueue.concurrentPerform(iterations: arr.count) {
+            i in
+            let char = arr[i]
+            let expected = encrypt(arr[i])
+            let actual = crackstation.decrypt(shaHash: expected)
+            XCTAssertEqual(actual, char)
+        }
+    }
+    
+    func testGivenCrackApiWithSha256_WhenAllCharacterCombinationsAreGiven_ThenShouldDecrypt() {
+        let arrayOfCombinations = getAllCombinations()
+        DispatchQueue.concurrentPerform(iterations: arrayOfCombinations.count) {
+            character in
+            let char = arrayOfCombinations[character]
+            let expected = encryptSha256(arrayOfCombinations[character])
+            let actual = crackstation.decrypt(shaHash: expected)
+            XCTAssertEqual(actual, char)
+        }
+    }
 
     private func encrypt(_ password: String) -> String {
         let dataToHash = Data(password.utf8)
@@ -79,6 +106,30 @@ final class CrackStationTests: XCTestCase {
         let shaHashDescription = String(Insecure.SHA1.hash(data: dataToHash).description)
         let shaHash = String(shaHashDescription.dropFirst(prefix.count - 1))
         return shaHash
+    }
+    
+    private func encryptSha256(_ password: String) -> String {
+        let dataToHash = Data(password.utf8)
+        let prefix = "SHA256 digest: "
+        let shaHashDescription = String(SHA256.hash(data: dataToHash).description)
+        let shaHash = String(shaHashDescription.dropFirst(prefix.count - 1))
+        return shaHash
+    }
+    
+    private func getAllCombinations() -> [String] {
+        var combinationArray = [String]()
+        let string = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!?"
+    
+        for char in string {
+            combinationArray.append(String(char))
+            for secondChar in string {
+                combinationArray.append(String(char) + String(secondChar))
+                for thirdChar in string {
+                    combinationArray.append(String(char) + String(secondChar) + String(thirdChar))
+                }
+            }
+        }
+        return combinationArray
     }
 }
 

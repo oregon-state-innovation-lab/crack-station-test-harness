@@ -1,6 +1,6 @@
 # CrackStationWrapper
 
-A test harness for the `CrackStation` assignment in CS 561.  This test harness is for POC v1 only, so single-character passwords encrypted using SHA-1.  We plan to expand it to POC v2 and MVP.
+A test harness for the `CrackStation` assignment in CS 561.  This test harness is for POC v1, POC v2 and MVP, passwords encrypted using SHA-1 and SHA256. 
 
 ## Usage
 
