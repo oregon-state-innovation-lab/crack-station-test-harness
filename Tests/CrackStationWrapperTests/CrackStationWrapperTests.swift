@@ -83,7 +83,7 @@ final class CrackStationTests: XCTestCase {
         DispatchQueue.concurrentPerform(iterations: arrayOfCombinations.count) {
             password in
             let expectedPassword = arrayOfCombinations[password]
-            let passwordEncryption = encrypt(arrayOfCombinations[password])
+            let passwordEncryption = encrypt(expectedPassword)
             let actualPassword = crackstation.decrypt(shaHash: passwordEncryption)
             XCTAssertEqual(actualPassword, expectedPassword)
         }
@@ -93,7 +93,7 @@ final class CrackStationTests: XCTestCase {
         DispatchQueue.concurrentPerform(iterations: arrayOfCombinations.count) {
             password in
             let expectedPassword = arrayOfCombinations[password]
-            let passwordEncryption = encryptSha256(arrayOfCombinations[password])
+            let passwordEncryption = encryptSha256(expectedPassword)
             let actualPassword = crackstation.decrypt(shaHash: passwordEncryption)
             XCTAssertEqual(expectedPassword, actualPassword)
         }
