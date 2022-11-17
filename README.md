@@ -15,6 +15,7 @@ So, if you are a student trying to run this test harness on your own code, then 
 
 If the student repository is private (as it should be for this assignment), then make sure the student adds you as a *collaborator*.  Then, use the ssh git link for the git URL.  For the version tag to work, the student must `git tag` their release using *semantic versioning* (e.g. `git tag 1.0.0`).
 
+The tests have comments describing which set of tests belong to which version of Crackstation, i.e POC v1, POC v2, MVP. So, If you want to test POC v1, comment out the tests with mark POC v2 and MVP.
 
 ## Handy tricks
 
