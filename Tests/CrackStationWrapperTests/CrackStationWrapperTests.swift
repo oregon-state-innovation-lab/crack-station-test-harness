@@ -78,27 +78,28 @@ final class CrackStationTests: XCTestCase {
     
     
     // tests for MVP
+    
     func testGivenCrackApiWithSha1_WhenAllCharacterCombinationsAreGiven_ThenShouldDecrypt() {
-        let arr = getAllCombinations()
-        DispatchQueue.concurrentPerform(iterations: arr.count) {
-            i in
-            let char = arr[i]
-            let expected = encrypt(arr[i])
-            let actual = crackstation.decrypt(shaHash: expected)
-            XCTAssertEqual(actual, char)
+        DispatchQueue.concurrentPerform(iterations: arrayOfCombinations.count) {
+            password in
+            let expectedPassword = arrayOfCombinations[password]
+            let passwordEncryption = encrypt(arrayOfCombinations[password])
+            let actualPassword = crackstation.decrypt(shaHash: passwordEncryption)
+            XCTAssertEqual(actualPassword, expectedPassword)
         }
     }
     
     func testGivenCrackApiWithSha256_WhenAllCharacterCombinationsAreGiven_ThenShouldDecrypt() {
-        let arrayOfCombinations = getAllCombinations()
         DispatchQueue.concurrentPerform(iterations: arrayOfCombinations.count) {
-            character in
-            let char = arrayOfCombinations[character]
-            let expected = encryptSha256(arrayOfCombinations[character])
-            let actual = crackstation.decrypt(shaHash: expected)
-            XCTAssertEqual(actual, char)
+            password in
+            let expectedPassword = arrayOfCombinations[password]
+            let passwordEncryption = encryptSha256(arrayOfCombinations[password])
+            let actualPassword = crackstation.decrypt(shaHash: passwordEncryption)
+            XCTAssertEqual(expectedPassword, actualPassword)
         }
     }
+    
+    lazy var arrayOfCombinations = getAllCombinations()
 
     private func encrypt(_ password: String) -> String {
         let dataToHash = Data(password.utf8)
