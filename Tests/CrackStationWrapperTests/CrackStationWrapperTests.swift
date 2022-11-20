@@ -84,17 +84,18 @@ final class CrackStationTests: XCTestCase {
             password in
             let expectedPassword = arrayOfCombinations[password]
             let passwordEncryption = encrypt(expectedPassword)
-            let actualPassword = crackstation.decrypt(shaHash: passwordEncryption)
+            
+            let actualPassword = crackStation.decrypt(shaHash: passwordEncryption)
             XCTAssertEqual(actualPassword, expectedPassword)
         }
     }
-    
+
     func testGivenCrackApiWithSha256_WhenAllCharacterCombinationsAreGiven_ThenShouldDecrypt() {
         DispatchQueue.concurrentPerform(iterations: arrayOfCombinations.count) {
             password in
             let expectedPassword = arrayOfCombinations[password]
             let passwordEncryption = encryptSha256(expectedPassword)
-            let actualPassword = crackstation.decrypt(shaHash: passwordEncryption)
+            let actualPassword = crackStation.decrypt(shaHash: passwordEncryption)
             XCTAssertEqual(expectedPassword, actualPassword)
         }
     }
@@ -111,7 +112,7 @@ final class CrackStationTests: XCTestCase {
     
     private func encryptSha256(_ password: String) -> String {
         let dataToHash = Data(password.utf8)
-        let prefix = "SHA256 digest: "
+        let prefix = "SHA256 digest:  "
         let shaHashDescription = String(SHA256.hash(data: dataToHash).description)
         let shaHash = String(shaHashDescription.dropFirst(prefix.count - 1))
         return shaHash
@@ -120,7 +121,7 @@ final class CrackStationTests: XCTestCase {
     private func getAllCombinations() -> [String] {
         var combinationArray = [String]()
         let string = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!?"
-    
+
         for char in string {
             combinationArray.append(String(char))
             for secondChar in string {
